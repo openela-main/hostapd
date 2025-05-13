@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 Name:           hostapd
-Version:        2.10
-Release:        1%{?dist}
+Version:        2.11
+Release:        2%{?dist}
 Summary:        IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator
 License:        BSD
 URL:            http://w1.fi/hostapd
@@ -73,6 +73,8 @@ cat defconfig | sed \
     -e '/^#CONFIG_IEEE80211N=y/s/^#//' \
     -e '/^#CONFIG_IEEE80211R=y/s/^#//' \
     -e '/^#CONFIG_IEEE80211AC=y/s/^#//' \
+    -e '/^#CONFIG_IEEE80211AX=y/s/^#//' \
+    -e '/^#CONFIG_IEEE80211BE=y/s/^#//' \
     -e '/^#CONFIG_FULL_DYNAMIC_VLAN=y/s/^#//' \
     -e '/^#CONFIG_LIBNL32=y/s/^#//' \
     -e '/^#CONFIG_ACS=y/s/^#//' \
@@ -187,6 +189,13 @@ fi
 %{_sysconfdir}/logwatch/scripts/services/%{name}
 
 %changelog
+* Thu Feb 13 2025 Davide Caratti <dcaratti@redhat.com> - 2.11-2
+- Enable CONFIG_IEEE80211BE
+  Resolves: RHEL-58726
+
+* Tue Dec  3 2024 Davide Caratti <dcaratti@redhat.com> - 2.11-1
+- Update to version 2.11
+
 * Fri Jan 21 2022 Davide Caratti <dcaratti@redhat.com> - 2.10-1
 - Update to version 2.10
 
