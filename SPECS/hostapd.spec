@@ -2,7 +2,7 @@
 
 Name:           hostapd
 Version:        2.11
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator
 License:        BSD
 URL:            http://w1.fi/hostapd
@@ -13,6 +13,9 @@ Source2:        %{name}.conf
 Source3:        %{name}.conf.5
 Source4:        %{name}.sysconfig
 Source5:        %{name}.init
+
+Patch1: 0001-AP-MLD-Fix-link-ID-validation-in-Basic-MLE-parsing.patch
+Patch2: 0004-AP-MLD-Verify-AP-MLD-link-ID-validity-before-updatin.patch
 
 BuildRequires:  libnl3-devel
 BuildRequires:  openssl-devel
@@ -58,7 +61,7 @@ Requires:       perl-interpreter
 Logwatch scripts for hostapd.
 
 %prep
-%setup -q
+%autosetup -p1 -n %{name}-%{version}
 
 %build
 cd hostapd
@@ -189,6 +192,10 @@ fi
 %{_sysconfdir}/logwatch/scripts/services/%{name}
 
 %changelog
+* Wed Sep 23 2026 Davide Caratti <dcaratti@redhat.com> - 2.11-3
+- Fix OOB memory access in Multi-Link Operation element parsing
+  Resolves: RHEL-194042
+
 * Thu Feb 13 2025 Davide Caratti <dcaratti@redhat.com> - 2.11-2
 - Enable CONFIG_IEEE80211BE
   Resolves: RHEL-58726
